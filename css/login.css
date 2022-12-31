@@ -1,0 +1,15 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+.logoLogin{
+    margin: 0 0 0 15px;
+    text-decoration: none;
+
+}
+.logoLabel{
+    margin: 0 0 0 10px;
+    color: black;
+    
+}
