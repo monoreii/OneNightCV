@@ -61,5 +61,24 @@ class bantuan extends CI_Model{
 			'con_password' => $con_password
 		);
 		$this->db->insert('user', $data);
+		return true;
+	}
+
+	public function login(){
+		$username = $this->input->post('username');
+		$password = $this->input->post('password');
+
+		$this->db->where('username', $username);
+		$checkUser = $this->db->get('user');
+		if($checkUser->num_rows() == 1){ // check apakah ada baris
+			$akun = $checkUser->row(); // get data 1 row
+			if($akun->password == $password){
+				$this->session;
+				$_SESSION['id'] = $akun->id;
+				$_SESSION['username'] = $akun->username;
+				return true;
+			}
+		}
+		return false;
 	}
 }

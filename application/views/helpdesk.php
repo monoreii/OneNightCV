@@ -29,7 +29,6 @@
                         <a class="nav-link p-2" href="<?php echo site_url()?>/ats">ATS Maker</a>
 						<a class="nav-link p-2 active" href="<?php echo site_url()?>/helpdesk">Helpdesk</a>
                         <button class="btn btn-outline-light my-2 my-sm-0 buttonNavbar" onclick="location.href='<?php echo site_url()?>/login'">Login</button>
-                        <button class="btn btn-outline-light my-2 my-sm-0 buttonNavbar buttonNavbar-right"onclick="location.href='<?php echo site_url()?>/register'">Daftar</button>
                     </div>
                 </div>
             </div>

@@ -1,32 +1,3 @@
-<?php 
-
-	include '/config.php';
-	
-	error_reporting(0);
-	
-	session_start();
-
-// if (isset($_SESSION['username'])) {
-//     header("Location: atspage.html");
-// }
-
-	if (isset($_POST['submit'])) {
-		
-		$email = $_POST['email'];
-		$password = $_POST['password'];
-		$sql = "SELECT * FROM users WHERE email='$email' AND password='$password'";
-		$result = mysqli_query($conn, $sql);
-		echo "<script>alert('$email $password')</script>";
-		if ($result->num_rows > 0) {
-			$row = mysqli_fetch_assoc($result);
-			$_SESSION['username'] = $row['username'];
-			header("Location: atspage.html");
-		} else {
-			echo "<script>alert('Email atau password Anda salah. Silahkan coba lagi!')</script>";
-		}
-	}
-?>
-
 <!DOCTYPE html>
 <html>
     <head>
@@ -62,8 +33,8 @@
                                             </div>
                                             <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Masuk ke Akun Anda</h5>
                                             <div class="faorm-outline mb-4">
-                                                <label class="form-label" for="form2Example17">Email</label>
-                                                <input type="email" id="form2Example17" class="form-control form-control-lg" name="email" value="" required />
+                                                <label class="form-label" for="form2Example17">Username</label>
+                                                <input type="text" id="form2Example17" class="form-control form-control-lg"  name="username" value="" required />
                                                 
                                             </div>
                                         <div class="form-outline mb-4">
@@ -75,7 +46,7 @@
                                             <button class="btn btn-dark btn-lg btn-block" name="submit">Login</button>
                                             <!-- <button class="btn btn-dark btn-lg btn-block" type="button">Masuk</button> -->
                                         </div>
-                                        <p class="mb-5 pb-lg-2" style="color: #393f81;">Tidak punya akun? <a href="register.php" style="color: #393f81;">Register here</a></p>
+                                        <p class="mb-5 pb-lg-2" style="color: #393f81;">Tidak punya akun? <a href="<?= site_url()?>/Autentikasi/register" style="color: #393f81;">Register disini</a></p>
                                         </form>
 
                                     </div>
