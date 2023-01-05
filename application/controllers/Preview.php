@@ -6,6 +6,7 @@ class Preview extends CI_Controller{
 		$this->load->model('bantuan');
 	}
 	public function index(){
+		$this->session;
 		$this->load->helper('url');
 		// $id = $this->input->post('id');
 		// $data['getAts'] = $this->bantuan->getAts($id);

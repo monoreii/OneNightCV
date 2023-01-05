@@ -1,5 +1,14 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+if(!isset($_SESSION['login'])){
+	$login = "Login";
+} else{
+	if($_SESSION['username'] == true){
+		$login = $_SESSION['username'];
+	} else{
+		$login = "Login";
+	}
+}
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,7 +27,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-4">
             <div class="container">
-                <a class="navbar-brand" href="<?php echo site_url()?>/home">Logo</a>
+                <a class="navbar-brand" href="<?php echo site_url()?>/home">
+					<img src="<?= base_url('image/OneNightCV.png')?>" class="img-fluid">
+				</a>
                 <button class="navbar-toggler" type="button" data-target="#navbar-in-collapse" data-mdb-toggle="collapse" data-mdb-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                     <i class="fas fa-bars"></i>
                 </button>
@@ -27,7 +38,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <a class="nav-link active p-2" aria-current="page" href="<?php echo site_url()?>/home">Home</a>
                         <a class="nav-link p-2" href="<?php echo site_url()?>/ats">ATS Maker</a>
 						<a class="nav-link p-2" href="<?php echo site_url()?>/helpdesk">Helpdesk</a>
-                        <button class="btn btn-outline-light my-2 my-sm-0 buttonNavbar" onclick="location.href='<?php echo site_url()?>/Autentikasi/login'">Login</button>
+                        <a class="btn btn-outline-light my-2 my-sm-0 buttonNavbar" href="<?php echo site_url()?>/Home/profile"> <?= $login;?></a>
                     </div>
                 </div>
             </div>
@@ -51,40 +62,57 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </section>
         </header>
         <main>
-            <section class="pt-5 pb-4" id="hero-banner">
-                <div class="container px-5">
-                    <button class="btn btn-light mb-3" id="buttonReview">Review Pengguna</button>
-                </div>
-                <div class="container mt-5 mb-4" id="review">
-                    <div class="row mt-5" id="table">
-                        <div class="col-md-4 text-center">
-                            <img src="<?php echo base_url();?>image/mark.jpg" alt="" width="250" style="border-radius: 150px ;">
-                        </div>
-                        <div class="col-md-8 text-start" style="color: white;">
-                            <span class="fs-2 fw-bold">Muhammad Mark Jukeberk</span>
-                            <p class="fs-5">Pengamat masa depan</p>
-                            <p>Menurut saya, website ini sangatlah bagus! Website ini membantu saya untuk membuat Footbook, Saya merekomendasikan website ini untuk digunakan oleh masyarakat bumi ataupun alien, untuk mempermudah hidup dalam mencari pekerjaan!</p>
-                            <div class="rating" style="color: rgb(255, 231, 95);">
-                                <i class="fas fa-light fa-star"></i> <span class="fs-3">Rating : 10 / 10</span>
-                            </div>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="row mt-5" id="table">
-                        <div class="col-md-8 text-end" style="color: white;">
-                            <span class="fs-2 fw-bold">Ahmad Putin</span>
-                            <p class="fs-5">Penemu Rudal</p>
-                            <p>Website ini membantu saya menjadi Presiden! saya juga dapat mengimpor minyak banyak sekali, dan dengan mudah menutup akses minyak ke beberapa daerah yang tidak sepandangan dengan saya! Terima Kasih OneNightCV</p>
-                            <div class="rating" style="color: rgb(255, 231, 95);">
-                                <i class="fas fa-light fa-star"></i> <span class="fs-3">Rating : 9 / 10</span>
-                            </div>
-                        </div>
-                        <div class="col-md-4 text-center">
-                            <img src="<?php echo base_url();?>image/Putin.jpg" alt="" width="250" style="border-radius: 150px ;">
-                        </div>
-                    </div>
-                </div>
-            </section>
+			<section id="hero-banner">
+				<div class="container d-flex align-items-center justify-content-center">
+					<div class="col-11 mt-5">
+						<h5 class="display-5 mx-2 mt-5 mb-5 text-white text-center">Review User</h5>
+						<div class="container bg-light p-3 rounded-3">
+							<table class="table mt-1">
+								<thead>
+									<tr>
+										<th>Review</th>
+										<th>Rating</th>
+									</tr>
+								</thead>
+								<tbody id="idbody">
+								</tbody>
+							</table>
+						</div>	
+
+						<!-- add data table review -->
+						<button class="btn btn-light mt-3 mb-3" id="hideBtn"> Tambah Review</button>
+						<div class="container col-8 mt-5 bg-light p-5 rounded-3 mb-5 shadow" id="tambahReview">
+							<h1 class="fs-2 fw-light mb-4 text-center">Tambah Review</h1>
+							<form action="<?= site_url('Home/addReview')?>" method="POST">
+								<div class="mb-3">
+									<div class="row">
+										<div class="col-10">
+											<label for="exampleInputEmail1" class="form-label">Review</label>
+											<input type="text" class="form-control" id="exampleInput" name="review">
+										</div>
+										<div class="col-2">
+											<label for="exampleInput" class="form-label">Rating</label>
+											<select class="form-select" aria-label="Default select example" name="rating">
+												<option value="1">1</option>
+												<option value="2">2</option>
+												<option value="3">3</option>
+												<option value="4">4</option>
+												<option value="5">5</option>
+												<option value="6">6</option>
+												<option value="7">7</option>
+												<option value="8">8</option>
+												<option value="9">9</option>
+												<option value="10">10</option>
+											</select>
+										</div>
+									</div>
+								</div>
+								<button type="submit" class="btn" style="color: white; background: blueviolet;">Tambah Review</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</section>
         </main>
         <!-- Footer -->
         <footer class="text-center text-lg-start bg-white text-muted">
@@ -143,8 +171,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<br>
 							<h6 class="text-uppercase fw-bold mb-2">Email Newsletter</h6>
 							<div class="input-group mb-4">
+								<?php
+                                    echo $this->session->flashdata('email_sent');
+                                    echo form_open('/Home/send_mail');
+                                ?> 
 								<input type="text" class="form-control" placeholder="Email">
-								<button class="btn" style="background-color:blueviolet; color: white;">Send</button>
+								<button class="btn mt-3" style="background-color:blueviolet; color: white;">Send</button>
+								<?php
+                                    echo form_close();
+                                ?> 
 							</div>
 						</div>
                     </div>
@@ -159,12 +194,55 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0alpha.6/js/bootstrap.min.js" ></script>
         <script>
             $(document).ready( function () {
-                $("#review").hide();
-                $("#buttonReview").click(function(){
-                    $("#review").slideToggle("slow");
+				clear();
+                
+				$("#tambahReview").hide();
+                $("#hideBtn").click(function(){
+                    $("#tambahReview").slideToggle("slow");
 					
                 });
             } );
+            
+            function clear() {
+                setTimeout(function() {
+                    update();
+                    clear();
+                }, 1000); //Every 1500 milliseconds
+            }
+            
+            function update() {
+                $.ajax({
+                    url: 'http://localhost:3000/getReview',
+                    type: 'get',
+                    dataType: 'json',
+                    success: function(response){
+                        response = response.data;
+                        var len = 0;
+                        $('#idbody').empty(); 
+                        if(response != null){
+                            len = response.length;
+                        }
+                        if(len > 0){
+                            for(var i=0; i<len; i++){
+                                //Attribute
+                                var review = response[i].review;
+                                var rate = response[i].rating;
+                                var tr_str = 
+                                    "<tr>" +
+                                        "<td class='w-75'>" + review + "</td>" +
+                                        "<td class='w-25'>" + "<i class='fa-solid fa-star text-warning'></i>" + " " +rate + "</td>" +
+                                    "</tr>" ;
+                                $("#idbody").append(tr_str);
+								
+                            }
+                        }else{
+                            var tr_str = 
+                                "<h5>Empty Data</h5>";
+                            $("#idbody").append(tr_str);
+                        }
+                    }
+                });
+            }
         </script>
     </body>
 </html>

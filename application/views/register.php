@@ -6,9 +6,9 @@
         <link rel="stylesheet" href="<?php echo base_url(); ?>css/register.css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     </head>
-    <body>
+    <body class="bg-light">
         <main class="container">
-            <section class="vh-100" style="background-color: #eee;">
+            <section class="mt-5 mb-5">
                 <div class="container h-100">
                     <div class="row d-flex justify-content-center align-items-center h-100">
                         <div class="col-lg-12 col-xl-11">
@@ -24,8 +24,16 @@
                                                 <div class="d-flex flex-row align-items-center mb-4">
                                                     <i class="fas fa-user fa-lg me-3 fa-fw"></i>
                                                     <div class="form-outline flex-fill mb-0">
+                                                        <label class="form-label" for="form3Example1c">Username Anda</label>
+                                                        <input type="text" id="form3Example1c" class="form-control" placeholder="Username" name="username" value="" required>
+                                                        <!-- <input type="text" id="form3Example1c" class="form-control" /> -->
+                                                    </div>
+                                                </div>
+												<div class="d-flex flex-row align-items-center mb-4">
+                                                    <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                                                    <div class="form-outline flex-fill mb-0">
                                                         <label class="form-label" for="form3Example1c">Nama Anda</label>
-                                                        <input type="text" id="form3Example1c" class="form-control" placeholder="Nama Anda" name="username" value="" required>
+                                                        <input type="text" id="form3Example1c" class="form-control" placeholder="Nama Anda" name="nama_lengkap" value="" required>
                                                         <!-- <input type="text" id="form3Example1c" class="form-control" /> -->
                                                     </div>
                                                 </div>
@@ -40,7 +48,7 @@
                                                 <div class="d-flex flex-row align-items-center mb-4">
                                                     <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
                                                     <div class="form-outline flex-fill mb-0">
-                                                        <label class="form-label" for="form3Example4c">Password</label>
+                                                        <label class="form-label" for="form3Example4c">Password Anda</label>
                                                         <input type="password" id="form3Example4c" class="form-control" placeholder="Password" name="password" value="" required>
                                                         <!-- <input type="password" id="form3Example4c" class="form-control" /> -->
                                                     </div>
@@ -53,13 +61,15 @@
                                                         
                                                     </div>
                                                 </div>
-                                                <div class="form-check d-flex justify-content-center mb-5">
-                                                    <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3c" />
-                                                    <label class="form-check-label" for="form2Example3">
-                                                        Saya setuju dengan <a href="#!">Syarat Layanan</a>
-                                                    </label>
+												<div class="d-flex flex-row align-items-center mb-4">
+                                                    <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                                                    <div class="form-outline flex-fill mb-0">
+                                                        <label class="form-label" for="form3Example1c">Nomor Handphone Anda</label>
+                                                        <input type="text" id="form3Example1c" class="form-control" placeholder="Nomor Handphone" name="no_hp" value="" required>
+                                                        <!-- <input type="text" id="form3Example1c" class="form-control" /> -->
+                                                    </div>
                                                 </div>
-                                                <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                                                <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4 mt-5">
                                                     <button class="btn btn-lg btn-primary" name="submit" type="submit">Registrasi</button>
                                                 </div>
                                             </form>

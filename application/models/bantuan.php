@@ -56,12 +56,24 @@ class bantuan extends CI_Model{
 		}
 		$data = array(
 			'username' => $username,
+			'nama_lengkap'=> $this->input->post('nama_lengkap'),
 			'email' => $email,
 			'password' => $password,
-			'con_password' => $con_password
+			'con_password' => $con_password,
+			'no_hp'=> $this->input->post('no_hp')
 		);
 		$this->db->insert('user', $data);
 		return true;
+	}
+	
+	public function getUser($username){
+		$this->db->where('username', $username);
+		$query = $this->db->get('user');
+		return $query->row();
+	}
+	public function editProfile($id, $data){
+		$this->db->where('id', $id);
+		$this->db->update('user', $data);
 	}
 
 	public function login(){
@@ -81,4 +93,9 @@ class bantuan extends CI_Model{
 		}
 		return false;
 	}
+	
+	public function addReview($data){
+		$this->db->insert('review', $data);
+	}
 }
+

@@ -2,6 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 	if(!isset($_SESSION['login'])){
 		$login = "Login";
+		redirect('Autentikasi/login');
 	} else{
 		if($_SESSION['username'] == true){
 			$login = $_SESSION['username'];
@@ -27,7 +28,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <body class="bg-light">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-4">
             <div class="container">
-			<a class="navbar-brand" href="<?php echo site_url()?>/home">Logo</a>
+				<a class="navbar-brand" href="<?php echo site_url()?>/home">
+					<img src="<?= base_url('image/OneNightCV.png')?>" class="img-fluid">
+				</a>
                 <button class="navbar-toggler" type="button" data-target="#navbar-in-collapse" data-mdb-toggle="collapse" data-mdb-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                     <i class="fas fa-bars"></i>
                 </button>
@@ -36,7 +39,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <a class="nav-link p-2" aria-current="page" href="<?php echo site_url()?>/home">Home</a>
                         <a class="nav-link p-2 active" href="<?php echo site_url()?>/ats">ATS Maker</a>
 						<a class="nav-link p-2" href="<?php echo site_url()?>/helpdesk">Helpdesk</a>
-                        <button class="btn btn-outline-light my-2 my-sm-0 buttonNavbar" onclick="location.href='<?php echo site_url()?>/login'"><?= $login?></button>
+                        <a class="btn btn-outline-light my-2 my-sm-0 buttonNavbar" href="<?php echo site_url()?>/Home/profile"><?= $login?></a>
                     </div>
                 </div>
             </div>
@@ -50,14 +53,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<p class="fs-3 text-center"> Data diri Pribadi </p>
 							<hr class="mb-4">
                             <?php echo form_open_multipart('Ats/add_ats'); ?>
-                                <div class="mb-3">
+                                <!-- <div class="mb-3">
                                     <label for="gambar" class="form-label">Masukkan Foto Profil Anda</label>
                                     <div class="row">
                                         <div class="col-md-8">
                                             <input class="form-control" name="gambar" type="file" id="gambar">
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="mb-3">
 									<div class="row">
                                         <div class="col-md-8">
@@ -228,15 +231,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 										<button class="btn btn-success" id="showOrganization" type="button">Rekomendasi Organisasi</button>
 									</div>
 									<div class="form-floating mb-3 work">
-										<textarea class="form-control" id="ringkasanPekerjaan" style="height: 100px" placeholder="Rekomendasi Ringkasan Pekerjaan">Ini untuk pekerjaan</textarea>
+										<textarea class="form-control text-area" id="ringkasanPekerjaan" style="height: 100px" placeholder="Rekomendasi Ringkasan Pekerjaan">Seorang Manajer Pemasaran digitak kreatif dan kolaboratif yang berpengalaman lebih dari 15 tahun. Ahli mendorong pertumbuhan dan meningkatkan kesadaran brand melalui strategi kampanye yang berorientasi pelanggan. Berspesialisasi dalam pemasaran lintas kanal, komunikasi digital dan manajemen media sosial</textarea>
 										<label for="floatingInput">Rekomendasi Untuk Pekerjaan</label>
 									</div>
 									<div class="form-floating mb-3 organization">
-										<textarea class="form-control" id="ringkasanOrganisasi" style="height: 100px" placeholder="Rekomendasi Ringkasan Organisasi">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laborum, tenetur odit repudiandae expedita ad, quod explicabo doloribus porro ab, aliquam numquam quaerat sed hic soluta dolores facilis esse debitis suscipit.</textarea>
+										<textarea class="form-control text-area" id="ringkasanOrganisasi" style="height: 100px" placeholder="Rekomendasi Ringkasan Organisasi">Seorang penulis dengan skill memumpuni dalam melakukan riset dan komunikasi. Selain itu memiliki keahlian dan pengalaman dalam dunia kepenulisan seperti content writing, copywriting dan scriptwriting. Telah melaksanakan Content Writing selama 1 tahun, dan ingin melanjutkan suatu bakat ini ke dalam bidang tertentu yang dapat membantu mengasah skill Menulis.</textarea>
 										<label for="floatingInput">Rekomendasi Untuk Organisasi</label>
 									</div>
 								</div>
-								<button type="submit" class="btn mt-4" style="background : blueviolet; color: white;">Simpan & Lanjutkan</button>
+								<button type="submit" class="btn mt-4" style="background : blueviolet; color: white;">Simpan</button>
 								<button type="button" class="btn btn-secondary mt-4" onclick="location.href='<?php echo site_url()?>/preview'">Preview</button> 
 							<?php echo form_close(); ?>
                         </div>

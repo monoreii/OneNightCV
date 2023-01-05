@@ -1,3 +1,22 @@
+<?php
+	if(!isset($_SESSION['login'])){
+		redirect('Autentikasi/login');
+	} else if($_SESSION['login'] == false){
+		redirect('Autentikasi/login');
+	}
+	if(!isset($_SESSION['login'])){
+		$login = "Login";
+	} else{
+		if($_SESSION['username'] == true){
+			$login = $_SESSION['username'];
+		} else{
+			$login = "Login";
+		}
+	}
+	if($_SESSION['username'] != "admin"){
+		redirect('Helpdesk/helpdesk_user');
+	}
+?>
 <html lang="en">
 <head>
         <meta charset="utf-8">
@@ -9,17 +28,23 @@
         <!-- navbar css -->
         <link rel="stylesheet" href="<?php echo base_url(); ?>css/nav.css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+		<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css">
+		<!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css"> -->
         <!-- jquery -->
+		<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-		<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
-		<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+		<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+		<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 		
     </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-4">
             <div class="container">
-                <a class="navbar-brand" href="<?php echo site_url()?>/home">Logo</a>
+                <a class="navbar-brand" href="<?php echo site_url()?>/home">
+					<img src="<?= base_url('image/OneNightCV.png')?>" class="img-fluid">
+				</a>
                 <button class="navbar-toggler" type="button" data-target="#navbar-in-collapse" data-mdb-toggle="collapse" data-mdb-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                     <i class="fas fa-bars"></i>
                 </button>
@@ -28,7 +53,7 @@
                         <a class="nav-link p-2" aria-current="page" href="<?php echo site_url()?>/home">Home</a>
                         <a class="nav-link p-2" href="<?php echo site_url()?>/ats">ATS Maker</a>
 						<a class="nav-link p-2 active" href="<?php echo site_url()?>/helpdesk">Helpdesk</a>
-                        <button class="btn btn-outline-light my-2 my-sm-0 buttonNavbar" onclick="location.href='<?php echo site_url()?>/login'">Login</button>
+                        <a class="btn btn-outline-light my-2 my-sm-0 buttonNavbar" href="<?php echo site_url()?>/Home/profile"><?= $login?></a>
                     </div>
                 </div>
             </div>
@@ -68,66 +93,65 @@
 						<?php $no=1; foreach ($message as $m ) {?>
 						<tr>
 							<form action="">
-								<td><?php echo $no++ ?></td>
-								<td><?php echo $m->Subject ?></td>
-								<td><?php echo $m->Message ?></td>
-								<td>
-									<button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModaledit" data-toggle="modal">Edit <i class="fas fa-user-edit"></i></button>
-									<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal" >Delete <i class="fas fa-user-times"></i></button> <!--delete-->
+								<td class=""><?php echo $no++ ?></td>
+								<td class="w-25"><?php echo $m->Subject ?></td>
+								<td class="w-50"><?php echo $m->Message ?></td>
+								<td class="w-25">
+									<button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModaledit<?php echo $m->id?>" data-toggle="modal">Edit <i class="fas fa-user-edit"></i></button>
+									<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModalDelete<?php echo $m->id?>" >Delete <i class="fas fa-user-times"></i></button> <!--delete-->
 								</td>
 							</form>
 						</tr>
+									<!-- modal edit_message -->
+						<div class="modal fade" id="exampleModaledit<?php echo $m->id?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							<div class="modal-dialog modal-dialog-centered">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title">Edit Pesan</h5>
+										<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+									</div>
+									<div class="modal-body">
+										<form action="<?= base_url('index.php/Helpdesk/edit_message') ?>" Method="POST">
+											<input value="<?php echo $m->id?>" name="id" hidden>
+											<div class="mb-3">
+												<label for="recipient-name" class="col-form-label">Subject:</label>
+												<input type="text" class="form-control" id="subject" name="subject" value="<?php echo $m->Subject?>">
+											</div>
+											<div class="mb-3">
+												<label for="message-text" class="col-form-label">Message:</label>
+												<textarea class="form-control" id="message" name="message"></textarea>
+											</div>
+											<div class="modal-footer">
+												<button type="submit" class="btn mx-3" style="background-color:blueviolet; color: white;width:100%">Ubah</button>
+												<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="width:100%">Batal</button>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+
+									<!-- modal delete_message -->
+						<div class="modal fade" id="exampleModalDelete<?php echo $m->id?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							<div class="modal-dialog modal-dialog-centered">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title">Hapus Pesan</h5>
+										<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+									</div>
+									<div class="modal-body">
+										<p>Anda ingin menghapus Pesan ini?</p>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+										<a type="button" class="btn btn-danger"href=" <?= base_url('index.php/Helpdesk/delete_message/').$m->id ?>" >Hapus</a>
+									</div>
+								</div>
+							</div>
+						</div>
 					<?php } ?>
 					</tbody>
 				</table>
-			</div>
-
-			<!-- modal delete_message -->
-			<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-				<div class="modal-dialog modal-dialog-centered">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title">Hapus Pesan</h5>
-							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-						</div>
-						<div class="modal-body">
-							<p>Anda ingin menghapus Pesan ini?</p>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-							<a type="button" class="btn btn-danger"href=" <?= base_url('index.php/Helpdesk/delete_message/').$m->id ?>" >Hapus</a>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- modal edit_message -->
-			<div class="modal fade" id="exampleModaledit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-				<div class="modal-dialog modal-dialog-centered">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title">Edit Pesan</h5>
-							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-						</div>
-						<div class="modal-body">
-							<?php foreach($message as $m){ ?>
-							<form action="<?= base_url('index.php/Helpdesk/edit_message/').$m->id ?>" Method="POST">
-								<div class="mb-3">
-									<label for="recipient-name" class="col-form-label">Subject:</label>
-									<input type="text" class="form-control" id="subject" name="subject" value="<?php echo $m->Subject?>">
-								</div>
-								<div class="mb-3">
-									<label for="message-text" class="col-form-label">Message:</label>
-									<textarea class="form-control" id="message" name="message"></textarea>
-								</div>
-								<div class="modal-footer">
-									<button type="submit" class="btn" style="background-color:blueviolet; color: white;width:100%">Ubah</button>
-									<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="width:100%">Batal</button>
-								</div>
-							</form>
-							<?php }?>
-						</div>
-					</div>
-				</div>
 			</div>
         </main>
         <footer class="text-center text-lg-start bg-white text-muted">
@@ -147,10 +171,12 @@
 							</p>
 
 							<br>
+							<h6 class="text-uppercase fw-bold mb-2 mx-3">CALENDAR</h6>
 							<div class="container" align="center">
+							
 								<div class="card" style="width: 18rem;">
-									<div class="card-body">
-										<?php echo $kalender; ?>
+									<div class="card-body p-4">
+										<?php echo $kalender;?>
 									</div>
 								</div>
 							</div>	
@@ -198,7 +224,7 @@
 						</div>
                     </div>
                 </div>
-            </section>        
+            </section>      
             <!-- Copyright -->
             <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.025);">
             © 2022 Copyright: OneNightCV - Kelompok 7</a>

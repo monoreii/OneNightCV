@@ -1,3 +1,14 @@
+<?php
+	if(!isset($_SESSION['login'])){
+		$login = "Login";
+	} else{
+		if($_SESSION['username'] == true){
+			$login = $_SESSION['username'];
+		} else{
+			$login = "Login";
+		}
+	}
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -21,13 +32,12 @@
                                     <form action="" method="POST" class="login-email">
                                         <div class="d-flex align-items-center mb-3 pb-1">
                                             
-                                            <img src="<?php echo base_url();?>/image/back.png" alt="Back" width="20" onclick="history.back()">
+                                            <img src="<?php echo base_url();?>image/back.png" alt="Back" width="20" onclick="history.back()">
                                             
                                             <!--Masukin buat headnya, Logo dll-->
-                                            <a class="logoLogin" href="/index.html">
+                                            <a class="logoLogin" href="<?= site_url('Home')?>">
                                                 <!-- img -->
-                                                LOGO
-                                                <span class="label fw-bold fs-3 logoLabel"> OneNightCV </span>
+                                                <img src="<?= base_url()?>image/OneNightCV_Black.png" class="img-fluid">
                                             </a>
                                                 
                                             </div>
@@ -46,9 +56,8 @@
                                             <button class="btn btn-dark btn-lg btn-block" name="submit">Login</button>
                                             <!-- <button class="btn btn-dark btn-lg btn-block" type="button">Masuk</button> -->
                                         </div>
-                                        <p class="mb-5 pb-lg-2" style="color: #393f81;">Tidak punya akun? <a href="<?= site_url()?>/Autentikasi/register" style="color: #393f81;">Register disini</a></p>
                                         </form>
-
+										<p class="mb-5 pb-lg-2" style="color: #393f81;">Tidak punya akun? <a href="<?= site_url()?>/Autentikasi" style="color: #393f81;">Register disini</a></p>
                                     </div>
                                 </div>
                             </div>

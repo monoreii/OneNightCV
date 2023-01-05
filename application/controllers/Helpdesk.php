@@ -7,11 +7,22 @@ class Helpdesk extends CI_Controller{
 		parent::__construct();
 		$this->load->model('bantuan');
 	}
-	public function index($tahun = NULL, $bulan = NULL)
+	public function index()
 	{
+		$this->session;
 		$this->load->helper('url');
-		$this->load->library('calendar');
+
+		$data = array(
+            'start_day' =>  'sunday',
+            'show_next_prev' => TRUE,
+            'next_prev_url' => base_url()."index.php/Helpdesk/index"
+		);
+		$this->load->library('calendar', $data);
+		$tahun = $this->uri->segment(3);
+		$bulan = $this->uri->segment(4);
 		$data['kalender'] = $this->calendar->generate($tahun, $bulan);
+		$this->load->library('calendar');
+
 		$data['message'] = $this->bantuan->getMessage();
 		//load homepage
 		$this->load->view('helpdesk', $data);
@@ -30,7 +41,8 @@ class Helpdesk extends CI_Controller{
 		$this->bantuan->add_message($data);
 		$this->index();
 	}
-	public function edit_message($id){
+	public function edit_message(){
+		$id = $this->input->post('id');
 		$data = array(
 			'Subject'=>$this->input->post('subject'),
 			'Message'=>$this->input->post('message')
@@ -39,16 +51,23 @@ class Helpdesk extends CI_Controller{
 		$this->index();
 	}
 
-	// public function getOneMessage($id){
-	// 	$res = $this->bantuan->getOneMessage($id);
-	// 	$data = array(
-	// 		'datamsg' => $res
-	// 	);
-	// 	$this->load->view()
-	// }
-
 	public function delete_message($id){
 		$this->bantuan->delete_message($id);
 		$this->index();
+	}
+	public function helpdesk_user(){
+		$this->session;
+		$data = array(
+            'start_day' =>  'sunday',
+            'show_next_prev' => TRUE,
+            'next_prev_url' => base_url()."index.php/Helpdesk/index"
+		);
+		$this->load->library('calendar', $data);
+		$tahun = $this->uri->segment(3);
+		$bulan = $this->uri->segment(4);
+		$data['kalender'] = $this->calendar->generate($tahun, $bulan);
+		$this->load->library('calendar');
+		$data['message'] = $this->bantuan->getMessage();
+		$this->load->view('helpdesk-user', $data);
 	}
 }

@@ -20,31 +20,33 @@
 				background: #521987;
 				transition: 360ms ease;
 			}
-
-			/* @page {
-				size: A4;
-				margin: 0;
-			} */
-			@media print and (min-width: 1024px){
-				body {
-					display: none;
+			
+			@media print{
+				body * {
+					visibility: hidden;
 				}
 				#content, #content *{
-					display: block;
+					visibility: visible;
+				}
+				#content{
+					position: absolute;
+					left: 0;
+					top: 0;
 				}
 			}
 		</style>
 	</head>
 	<body>
-		<header>
+		<div class="container mt-5">
+			<a href="javascript:history.back()">
+				<img class="img-fluid" width="30" src="<?= base_url()?>/image/back.png">
+			</a>
 			<p class="display-5 text-center mt-5">Preview Hasil CV</p>
-		</header>
+		</div>
 		<div class="container mt-5 col-md-9 mb-5" id="content">
 			<?php foreach ($getAts as $ats){?>
 			<div class="row mt-5 mb-5 container">
-				<div class="col-md-5 text-end">
-					<img src="<?php echo base_url() ?>./image/<?php echo $ats->gambar?>" class="img-fluid rounded-circle" width="230">
-				</div>
+				
 				<div class="col-md-7 mt-3">
 					<p class="fs-3 fw-semibold mx-5"><?php echo $ats->nama?></p>
 					<p class="fs-4 fw-light mx-5"> <?php echo $ats->pekerjaan?></p>
@@ -93,7 +95,7 @@
 					</div>
 					<div class="row">
 						<div class="col-4">
-							<p class="fs-6 fw-light mx-5"><?php echo $ats->tanggalMulai1?> <?php echo $ats->tanggalExpired1?> </p>
+							<p class="fs-6 fw-light mx-5"><?php echo $ats->tanggalMulai1?> - <?php echo $ats->tanggalExpired1?> </p>
 						</div>
 						<div class="col-8">
 							<p class="fs-5 fw-light"><?php echo $ats->sertifikat1?></p>

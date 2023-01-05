@@ -6,24 +6,25 @@ class Ats extends CI_Controller{
 		$this->load->model('bantuan');
 	}
 	public function index(){
+		$this->session;
 		$this->load->helper('url');
 		$this->load->view('Ats');
 	}
 	public function add_ats($data_ats = 0){
 
-		$gambar = $_FILES['gambar'];
-		$config['upload_path']          = './image/';
-		$config['allowed_types']        = 'jpg|png';
-		$this->load->library('upload', $config);
+		// $gambar = $_FILES['gambar'];
+		// $config['upload_path']          = './image/';
+		// $config['allowed_types']        = 'jpg|png';
+		// $this->load->library('upload', $config);
 
-		if ( ! $this->upload->do_upload('gambar'))
-		{
-			echo "Gagal Menambahkan Gambar!";
-		}
-		else
-		{
-			$gambar = $this->upload->data('file_name');
-		}
+		// if ( ! $this->upload->do_upload('gambar'))
+		// {
+		// 	echo "Gagal Menambahkan Gambar!";
+		// }
+		// else
+		// {
+		// 	$gambar = $this->upload->data('file_name');
+		// }
 
 		$data_ats = array(
 			'id'=>$this->input->post('id'),
@@ -54,7 +55,7 @@ class Ats extends CI_Controller{
 			'tanggalExpired1'=>$this->input->post('tanggalExpired1'),
 			'tanggalExpired2'=>$this->input->post('tanggalExpired2'),
 			'ringkasan'=>$this->input->post('ringkasan'),
-			'gambar'=>$gambar
+			// 'gambar'=>$gambar
 		);
 		
 		$this->bantuan->add_ats($data_ats);
